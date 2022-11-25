@@ -11,7 +11,9 @@ import {
   ConnectedSocket
 } from "@nestjs/websockets";
 import { Socket, Server } from 'socket.io';
+import { ConvertPriceDto } from './convert.price.dto';
 import { DefaultRoom } from './default.room.enum';
+import { PriceSendToAllRQ } from './send.to.all.rq.dto';
 
 @WebSocketGateway({
 
@@ -91,19 +93,19 @@ export class PriceGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
   }
   }
 
-  sendToAllPricesOtc(msg: Record<string, any>){
+  sendToAllPricesOtc(msg:PriceSendToAllRQ){
       this.broadCastMessage(DefaultRoom.ALL_PRICES,`otc_${msg.channel}`,msg)
   }
 
-  sendToAllPricesConvert(msg: Record<string, any>){
+  sendToAllPricesConvert(msg: ConvertPriceDto){
       this.broadCastMessage(DefaultRoom.ALL_PRICES,`convert_${msg.channel}`,msg)
   }
 
-    sendToAllPricesConvertNoneIrr(msg: Record<string, any>){
+    sendToAllPricesConvertNoneIrr(msg: ConvertPriceDto){
         this.broadCastMessage(`convert_${msg.from_crypto.toLowerCase()}_${msg.to_crypto.toLowerCase()}`,`convert_${msg.channel}`,msg)
     }
 
-    sendToAllPricesOtcNoneIrr(msg: Record<string, any>){
+    sendToAllPricesOtcNoneIrr(msg: PriceSendToAllRQ){
         this.broadCastMessage(`otc_${msg.from.toLowerCase()}_${msg.to.toLowerCase()}`,`otc_${msg.channel}`,msg)
     }
 

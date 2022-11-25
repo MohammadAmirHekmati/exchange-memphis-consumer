@@ -16,9 +16,9 @@ export class PricingService{
 
     priceConvert(convertPrice:ConvertPriceDto){
      if(convertPrice.to_crypto.toLowerCase()=='irr')
-     this.priceGateway.sendToAllPricesOtc(convertPrice)
+     this.priceGateway.sendToAllPricesConvert(convertPrice)
 
      else 
-        this.priceGateway.sendToAllPricesOtcNoneIrr(convertPrice)
+        this.priceGateway.sendToAllPricesConvertNoneIrr(convertPrice)
     }
 }

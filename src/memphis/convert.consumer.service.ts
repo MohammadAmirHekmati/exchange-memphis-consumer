@@ -23,21 +23,21 @@ export class MemphisConvertConsumerService implements OnModuleInit{
 
     async convertConsumerConnection(){
         this.convertConsumerChannelOne=await this.memphisConnection.consumer({
-            stationName: 'final_convert_pricing',
+            stationName: 'convert',
             consumerName: 'convert_consumer_channel_one'
         });
     }
 
     async convertConsumerConnectionChannelTwo(){
         this.convertConsumerChannelTwo=await this.memphisConnection.consumer({
-            stationName: 'final_convert_pricing',
+            stationName: 'convert',
             consumerName: 'convert_consumer_channel_two'
         });
     }
 
     async convertConsumerConnectionChannelThree(){
         this.convertConsumerChannelThree=await this.memphisConnection.consumer({
-            stationName: 'final_convert_pricing',
+            stationName: 'convert',
             consumerName: 'convert_consumer_channel_three'
         });
     }
@@ -47,8 +47,6 @@ export class MemphisConvertConsumerService implements OnModuleInit{
         this.convertConsumerChannelOne.on('message', (message: Message) => {
             try {
                 const res=JSON.parse(message.getData().toString())
-                console.log("- channel 1 ----")
-                console.log(res)
                 this.pricingService.priceConvert(res)
             } catch (error) {
                 
