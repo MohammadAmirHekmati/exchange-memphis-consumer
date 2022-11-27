@@ -5,7 +5,8 @@ import { MemphisConvertConsumerService } from './convert.consumer.service';
 import { MemphisConnection } from './memphis.connection.service';
 
 @Module({
-    imports:[SocketModule],
-    providers:[MemphisConnection,MemphisConsumerService,MemphisConvertConsumerService]
+    imports:[],
+    providers:[MemphisConnection,MemphisConsumerService,MemphisConvertConsumerService],
+    exports:[MemphisConsumerService,MemphisConvertConsumerService]
 })
 export class MemphisModule {}

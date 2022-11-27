@@ -1,95 +1,92 @@
 import { Inject, Injectable, OnModuleInit } from "@nestjs/common"
 import { Consumer, Memphis, Message } from 'memphis-dev/types';
-import { PricingService } from "src/socket/pricing.service";
+import {BehaviorSubject} from "rxjs"
 
 @Injectable()
 export class MemphisConsumerService implements OnModuleInit{
-    constructor(@Inject("MEMPHIS_CONNECTION") private memphisConnection: Memphis,
-    private pricingService:PricingService){}
+    otcChannel1Subject=new BehaviorSubject(null)
+    otcChannel2Subject=new BehaviorSubject(null)
+    otcChannel3Subject=new BehaviorSubject(null) 
+    otcChannel4Subject=new BehaviorSubject(null) 
+    constructor(@Inject("MEMPHIS_CONNECTION") private memphisConnection: Memphis){}
     otcConsumerChannelOne:Consumer
     otcConsumerChannelTwo:Consumer
     otcConsumerChannelThree:Consumer
+    otcConsumerChannelFour:Consumer
 
     async onModuleInit() {
         await this.otcConsumerConnection()
         await this.otcConsumerConnectionChannelTwo()
         await this.otcConsumerConnectionChannelThree()
+        await this.otcConsumerConnectionChannelFour()
 
-        await this.otcConsume()
-        await this.otcConsumeChannelTwo()
-        await this.otcConsumeChannelThree()
+         this.otcConsume()
+         this.otcConsumeChannelTwo()
+         this.otcConsumeChannelThree()
+        this.otcConsumeChannelFour()
     }
 
 
     async otcConsumerConnection(){
         this.otcConsumerChannelOne=await this.memphisConnection.consumer({
-            stationName: 'otc',
-            consumerName: 'otc_consumer_channel_one'
+            stationName: 'otc_channel_one',
+            consumerName: 'channel_three'
         });
     }
 
 
     async otcConsumerConnectionChannelTwo(){
         this.otcConsumerChannelTwo=await this.memphisConnection.consumer({
-            stationName: 'otc',
-            consumerName: 'otc_consumer_channel_two'
+            stationName: 'otc_channel_two',
+            consumerName: 'channel_two'
         });
     }
 
 
     async otcConsumerConnectionChannelThree(){
         this.otcConsumerChannelThree=await this.memphisConnection.consumer({
-            stationName: 'otc',
-            consumerName: 'otc_consumer_channel_three'
+            stationName: 'otc_channel_three',
+            consumerName: 'channel_three'
         });
     }
 
-    async otcConsume(){
+    async otcConsumerConnectionChannelFour(){
+        this.otcConsumerChannelFour=await this.memphisConnection.consumer({
+            stationName: 'otc_channel_four',
+            consumerName: 'channel_four'
+        });
+    }
+
+     otcConsume(){
             this.otcConsumerChannelOne.on('message', (message: Message) => {
-                try {
-                    const res= JSON.parse(message.getData().toString())
-                    
-                    this.pricingService.priceOtc(res)
-                } catch (error) {
-                    
-                }
-            });
-    
-            this.otcConsumerChannelOne.on('error', (error) => {
+                message.ack()
+                    this.otcChannel1Subject.next(message.getData())
             });
     }
 
 
-    async otcConsumeChannelTwo(){
+     otcConsumeChannelTwo(){
         this.otcConsumerChannelTwo.on('message', (message: Message) => {
-            try {
-                const res= JSON.parse(message.getData().toString())
-                
-                this.pricingService.priceOtc(res)
-            } catch (error) {
-                
-            }
-          
-        });
-
-        this.otcConsumerChannelTwo.on('error', (error) => {
+            message.ack()
+            this.otcChannel2Subject.next(message.getData())
         });
 }
 
 
-async otcConsumeChannelThree(){
+ otcConsumeChannelThree(){
   
     this.otcConsumerChannelThree.on('message', (message: Message) => {
-        try {
-            const res= JSON.parse(message.getData().toString())
-            
-            this.pricingService.priceOtc(res)
-        } catch (error) {
-            
-        }
+            message.ack()
+        
+        this.otcChannel3Subject.next(message.getData())
     });
+}
 
-    this.otcConsumerChannelThree.on('error', (error) => {
+otcConsumeChannelFour(){
+  
+    this.otcConsumerChannelFour.on('message', (message: Message) => {
+            message.ack()
+        this.otcChannel4Subject.next(message.getData())
     });
 }
 

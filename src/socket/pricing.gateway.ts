@@ -11,9 +11,12 @@ import {
   ConnectedSocket
 } from "@nestjs/websockets";
 import { Socket, Server } from 'socket.io';
+import { MemphisConsumerService } from 'src/memphis/consumer.service';
+import { MemphisConvertConsumerService } from 'src/memphis/convert.consumer.service';
 import { ConvertPriceDto } from './convert.price.dto';
 import { DefaultRoom } from './default.room.enum';
 import { PriceSendToAllRQ } from './send.to.all.rq.dto';
+import {map} from 'rxjs'
 
 @WebSocketGateway({
 
@@ -30,8 +33,80 @@ export class PriceGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
   server: Server;
   roomNames:string[]=[]
 
-  constructor() {
+  constructor(private memphisConvertConsumer:MemphisConvertConsumerService,
+    private memphisOtcConsumer:MemphisConsumerService) {
+     this.memphisConvertConsumer.channel1Subject.pipe(map(res=>{
+      if(res && JSON.stringify(res).includes("data"))
+       return JSON.parse(res.toString())
 
+     })).subscribe((res)=>{
+      if(res)
+      res.to_crypto=='irr'?this.sendToAllPricesConvert(res):this.sendToAllPricesConvertNoneIrr(res)
+     })
+     
+     this.memphisConvertConsumer.channel2Subject.pipe(map(res=>{
+      if(res && JSON.stringify(res).includes("data"))
+       return JSON.parse(res.toString())
+
+     })).subscribe((res)=>{
+      if(res)
+      res.to_crypto=='irr'?this.sendToAllPricesConvert(res):this.sendToAllPricesConvertNoneIrr(res)
+     })
+
+     this.memphisConvertConsumer.channel3Subject.pipe(map(res=>{
+      if(res && JSON.stringify(res).includes("data"))
+       return JSON.parse(res.toString())
+
+     })).subscribe((res)=>{
+      if(res)
+      res.to_crypto=='irr'?this.sendToAllPricesConvert(res):this.sendToAllPricesConvertNoneIrr(res)
+     })
+
+     this.memphisConvertConsumer.channel4Subject.pipe(map(res=>{
+      if(res && JSON.stringify(res).includes("data"))
+       return JSON.parse(res.toString())
+
+     })).subscribe((res)=>{
+      if(res)
+      res.to_crypto=='irr'?this.sendToAllPricesConvert(res):this.sendToAllPricesConvertNoneIrr(res)
+     })
+      
+     this.memphisOtcConsumer.otcChannel1Subject.pipe(map(res=>{
+      if(res && JSON.stringify(res).includes("data"))
+       return JSON.parse(res.toString())
+
+     })).subscribe((res)=>{
+      if(res)
+      res.to=="irr"?this.sendToAllPricesOtc(res):this.sendToAllPricesOtcNoneIrr(res)
+     })
+      
+     this.memphisOtcConsumer.otcChannel2Subject.pipe(map(res=>{
+      if(res && JSON.stringify(res).includes("data"))
+       return JSON.parse(res.toString())
+
+     })).subscribe((res)=>{
+      if(res)
+      res.to=="irr"?this.sendToAllPricesOtc(res):this.sendToAllPricesOtcNoneIrr(res)
+     })
+
+     this.memphisOtcConsumer.otcChannel3Subject.pipe(map(res=>{
+      if(res && JSON.stringify(res).includes("data"))
+       return JSON.parse(res.toString())
+
+     })).subscribe((res)=>{
+      if(res)
+      res.to=="irr"?this.sendToAllPricesOtc(res):this.sendToAllPricesOtcNoneIrr(res)
+     })
+
+     this.memphisOtcConsumer.otcChannel4Subject.pipe(map(res=>{
+      if(res && JSON.stringify(res).includes("data"))
+       return JSON.parse(res.toString())
+
+     })).subscribe((res)=>{
+      if(res)
+      res.to=="irr"?this.sendToAllPricesOtc(res):this.sendToAllPricesOtcNoneIrr(res)
+     })
+     
   }
 
   afterInit(server: Server) {

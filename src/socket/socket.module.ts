@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
+import { MemphisModule } from 'src/memphis/memphis.module';
 import { PriceGateway } from './pricing.gateway';
-import { PricingService } from './pricing.service';
 
 @Module({
-    providers:[PricingService,PriceGateway],
-    exports:[PricingService]
+    imports:[MemphisModule],
+    providers:[PriceGateway],
+    exports:[]
 })
 export class SocketModule {}
