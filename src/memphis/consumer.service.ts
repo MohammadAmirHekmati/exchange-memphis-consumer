@@ -58,36 +58,65 @@ export class MemphisConsumerService implements OnModuleInit{
     }
 
      otcConsume(){
+        try {
             this.otcConsumerChannelOne.on('message', (message: Message) => {
                 message.ack()
                     this.otcChannel1Subject.next(message.getData())
             });
+        } catch (e) {
+            if("code" in e && e.code=="CONNECTION_CLOSED")
+            {
+              process.exit()
+            }
+        }
+          
     }
 
 
      otcConsumeChannelTwo(){
+      try {
         this.otcConsumerChannelTwo.on('message', (message: Message) => {
             message.ack()
             this.otcChannel2Subject.next(message.getData())
         });
+      } catch (e) {
+        if("code" in e && e.code=="CONNECTION_CLOSED")
+        {
+          process.exit()
+        }
+      }
 }
 
 
  otcConsumeChannelThree(){
   
+   try {
     this.otcConsumerChannelThree.on('message', (message: Message) => {
-            message.ack()
-        
-        this.otcChannel3Subject.next(message.getData())
-    });
+        message.ack()
+    
+    this.otcChannel3Subject.next(message.getData())
+});
+   } catch (e) {
+    if("code" in e && e.code=="CONNECTION_CLOSED")
+    {
+      process.exit()
+    }
+   }
 }
 
 otcConsumeChannelFour(){
   
-    this.otcConsumerChannelFour.on('message', (message: Message) => {
+    try {
+        this.otcConsumerChannelFour.on('message', (message: Message) => {
             message.ack()
         this.otcChannel4Subject.next(message.getData())
     });
+    } catch (e) {
+        if("code" in e && e.code=="CONNECTION_CLOSED")
+    {
+      process.exit()
+    }
+    }
 }
 
 

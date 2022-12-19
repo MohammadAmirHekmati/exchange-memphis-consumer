@@ -60,33 +60,62 @@ export class MemphisConvertConsumerService implements OnModuleInit {
     }
 
     convertConsume() {
-        this.convertConsumerChannelOne.on('message', (message: Message) => {
-            message.ack()
-            this.channel1Subject.next(message.getData())
-        });
+        try {
+            this.convertConsumerChannelOne.on('message', (message: Message) => {
+                message.ack()
+                this.channel1Subject.next(message.getData())
+            });
+        } catch (e) {
+            if("code" in e && e.code=="CONNECTION_CLOSED")
+            {
+              process.exit()
+            }
+        }
+      
     }
      
 
     convertConsumeChannelTwo() {
+      try {
         this.convertConsumerChannelTwo.on('message', (message: Message) => {
             message.ack()
             this.channel2Subject.next(message.getData())
         });
+      } catch (e) {
+        if("code" in e && e.code=="CONNECTION_CLOSED")
+            {
+              process.exit()
+            }
+      }
     }
 
     convertConsumeChannelThree() {
 
-        this.convertConsumerChannelThree.on('message', (message: Message) => {
-            message.ack()
-            this.channel3Subject.next(message.getData())
-        })
+        try {
+            this.convertConsumerChannelThree.on('message', (message: Message) => {
+                message.ack()
+                this.channel3Subject.next(message.getData())
+            })
+        } catch (e) {
+            if("code" in e && e.code=="CONNECTION_CLOSED")
+            {
+              process.exit()
+            }
+        }
     }
 
     convertConsumeChannelFour() {
 
+      try {
         this.convertConsumerChannelFour.on('message', (message: Message) => {
             message.ack()
             this.channel4Subject.next(message.getData())
         })
+      } catch (e) {
+        if("code" in e && e.code=="CONNECTION_CLOSED")
+        {
+          process.exit()
+        }
+      }
     }
 }
