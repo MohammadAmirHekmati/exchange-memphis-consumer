@@ -33,28 +33,28 @@ export class MemphisConvertConsumerService implements OnModuleInit {
 
     async convertConsumerConnection() {
         this.convertConsumerChannelOne = await this.memphisConnection.consumer({
-            stationName: 'convert_channel_one',
+            stationName: 'c_1',
             consumerName: 'one'
         });
     }
 
     async convertConsumerConnectionChannelTwo() {
         this.convertConsumerChannelTwo = await this.memphisConnection.consumer({
-            stationName: 'convert_channel_two',
+            stationName: 'c_2',
             consumerName: 'two'
         });
     }
 
     async convertConsumerConnectionChannelThree() {
         this.convertConsumerChannelThree = await this.memphisConnection.consumer({
-            stationName: 'convert_channel_three',
+            stationName: 'c_3',
             consumerName: 'three'
         });
     }
 
     async convertConsumerConnectionChannelFour() {
         this.convertConsumerChannelFour = await this.memphisConnection.consumer({
-            stationName: 'convert_channel_four',
+            stationName: 'c_4',
             consumerName: 'four'
         });
     }
