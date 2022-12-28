@@ -32,31 +32,47 @@ export class MemphisConvertConsumerService implements OnModuleInit {
     }
 
     async convertConsumerConnection() {
-        this.convertConsumerChannelOne = await this.memphisConnection.consumer({
-            stationName: 'convert_channel_one',
-            consumerName: 'one'
-        });
+        try {
+            this.convertConsumerChannelOne = await this.memphisConnection.consumer({
+                stationName: 'convert_channel_one',
+                consumerName: 'one'
+            });
+        } catch (error) {
+            process.exit()
+        }
     }
 
     async convertConsumerConnectionChannelTwo() {
-        this.convertConsumerChannelTwo = await this.memphisConnection.consumer({
-            stationName: 'convert_channel_two',
-            consumerName: 'two'
-        });
+        try {
+            this.convertConsumerChannelTwo = await this.memphisConnection.consumer({
+                stationName: 'convert_channel_two',
+                consumerName: 'two'
+            });
+        } catch (error) {
+            process.exit()
+        }
     }
 
     async convertConsumerConnectionChannelThree() {
-        this.convertConsumerChannelThree = await this.memphisConnection.consumer({
-            stationName: 'convert_channel_three',
-            consumerName: 'three'
-        });
+        try {
+            this.convertConsumerChannelThree = await this.memphisConnection.consumer({
+                stationName: 'convert_channel_three',
+                consumerName: 'three'
+            });
+        } catch (error) {
+            process.exit()
+        }
     }
 
     async convertConsumerConnectionChannelFour() {
-        this.convertConsumerChannelFour = await this.memphisConnection.consumer({
-            stationName: 'convert_channel_four',
-            consumerName: 'four'
-        });
+        try {
+            this.convertConsumerChannelFour = await this.memphisConnection.consumer({
+                stationName: 'convert_channel_four',
+                consumerName: 'four'
+            }); 
+        } catch (error) {
+           process.exit()
+        }
     }
 
     convertConsume() {

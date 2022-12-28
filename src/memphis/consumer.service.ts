@@ -28,33 +28,49 @@ export class MemphisConsumerService implements OnModuleInit{
 
 
     async otcConsumerConnection(){
-        this.otcConsumerChannelOne=await this.memphisConnection.consumer({
-            stationName: 'otc_channel_one',
-            consumerName: 'channel_three'
-        });
+        try {
+            this.otcConsumerChannelOne=await this.memphisConnection.consumer({
+                stationName: 'otc_channel_one',
+                consumerName: 'channel_three'
+            });
+        } catch (error) {
+            process.exit()
+        }
     }
 
 
     async otcConsumerConnectionChannelTwo(){
-        this.otcConsumerChannelTwo=await this.memphisConnection.consumer({
-            stationName: 'otc_channel_two',
-            consumerName: 'channel_two'
-        });
+        try {
+            this.otcConsumerChannelTwo=await this.memphisConnection.consumer({
+                stationName: 'otc_channel_two',
+                consumerName: 'channel_two'
+            }); 
+        } catch (error) {
+           process.exit()
+        }
     }
 
 
     async otcConsumerConnectionChannelThree(){
-        this.otcConsumerChannelThree=await this.memphisConnection.consumer({
-            stationName: 'otc_channel_three',
-            consumerName: 'channel_three'
-        });
+        try {
+            this.otcConsumerChannelThree=await this.memphisConnection.consumer({
+                stationName: 'otc_channel_three',
+                consumerName: 'channel_three'
+            });
+        } catch (error) {
+            process.exit()
+        }
     }
 
     async otcConsumerConnectionChannelFour(){
-        this.otcConsumerChannelFour=await this.memphisConnection.consumer({
-            stationName: 'otc_channel_four',
-            consumerName: 'channel_four'
-        });
+        try {
+            this.otcConsumerChannelFour=await this.memphisConnection.consumer({
+                stationName: 'otc_channel_four',
+                consumerName: 'channel_four'
+            });
+        } catch (error) {
+            process.exit()
+        }
     }
 
      otcConsume(){
