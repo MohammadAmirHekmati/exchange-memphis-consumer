@@ -77,8 +77,6 @@ export class MemphisConsumerService implements OnModuleInit{
         try {
             this.otcConsumerChannelOne.on('message', (message: Message) => {
                 message.ack()
-                console.log("-------- chanell 1 ------")
-                console.log(message.getData())
                 this.otcChannel1Subject.next(message.getData())
             });
         } catch (e) {

@@ -196,6 +196,10 @@ export class PriceGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
   }
 
   broadCastMessage(room:string,event:string,msg){
+    console.log("--- broadcast message ------")
+    console.log(room)
+    console.log(event)
+    console.log(msg)
       this.roomNames.find(item=>item==room)?null:this.roomNames.push(room)
       this.server.of("/").to(room).emit(event,{type:"price",message:msg})
   }
