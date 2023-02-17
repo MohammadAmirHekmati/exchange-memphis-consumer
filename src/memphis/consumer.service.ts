@@ -30,7 +30,7 @@ export class MemphisConsumerService implements OnModuleInit{
     async otcConsumerConnection(){
         try {
             this.otcConsumerChannelOne=await this.memphisConnection.consumer({
-                stationName: 'otc_channel_one',
+                stationName: 'otc_channel_five',
                 consumerName: 'channel_three'
             });
         } catch (error) {
@@ -42,7 +42,7 @@ export class MemphisConsumerService implements OnModuleInit{
     async otcConsumerConnectionChannelTwo(){
         try {
             this.otcConsumerChannelTwo=await this.memphisConnection.consumer({
-                stationName: 'otc_channel_two',
+                stationName: 'otc_channel_six',
                 consumerName: 'channel_two'
             }); 
         } catch (error) {
@@ -54,7 +54,7 @@ export class MemphisConsumerService implements OnModuleInit{
     async otcConsumerConnectionChannelThree(){
         try {
             this.otcConsumerChannelThree=await this.memphisConnection.consumer({
-                stationName: 'otc_channel_three',
+                stationName: 'otc_channel_seven',
                 consumerName: 'channel_three'
             });
         } catch (error) {
@@ -65,7 +65,7 @@ export class MemphisConsumerService implements OnModuleInit{
     async otcConsumerConnectionChannelFour(){
         try {
             this.otcConsumerChannelFour=await this.memphisConnection.consumer({
-                stationName: 'otc_channel_four',
+                stationName: 'otc_channel_eight',
                 consumerName: 'channel_four'
             });
         } catch (error) {

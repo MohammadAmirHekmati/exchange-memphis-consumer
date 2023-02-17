@@ -34,7 +34,7 @@ export class MemphisConvertConsumerService implements OnModuleInit {
     async convertConsumerConnection() {
         try {
             this.convertConsumerChannelOne = await this.memphisConnection.consumer({
-                stationName: 'convert_channel_one',
+                stationName: 'convert_channel_five',
                 consumerName: 'one'
             });
         } catch (error) {
@@ -45,7 +45,7 @@ export class MemphisConvertConsumerService implements OnModuleInit {
     async convertConsumerConnectionChannelTwo() {
         try {
             this.convertConsumerChannelTwo = await this.memphisConnection.consumer({
-                stationName: 'convert_channel_two',
+                stationName: 'convert_channel_six',
                 consumerName: 'two'
             });
         } catch (error) {
@@ -56,7 +56,7 @@ export class MemphisConvertConsumerService implements OnModuleInit {
     async convertConsumerConnectionChannelThree() {
         try {
             this.convertConsumerChannelThree = await this.memphisConnection.consumer({
-                stationName: 'convert_channel_three',
+                stationName: 'convert_channel_seven',
                 consumerName: 'three'
             });
         } catch (error) {
@@ -67,7 +67,7 @@ export class MemphisConvertConsumerService implements OnModuleInit {
     async convertConsumerConnectionChannelFour() {
         try {
             this.convertConsumerChannelFour = await this.memphisConnection.consumer({
-                stationName: 'convert_channel_four',
+                stationName: 'convert_channel_eight',
                 consumerName: 'four'
             }); 
         } catch (error) {
